@@ -13,7 +13,12 @@ export default function Layouts({ children }) {
       <Head>
         <title>Next Shoppo</title>
       </Head>
-      <AppBar position="static" sx={{ backgroundColor: '#203040' }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: '#203040',
+        }}
+      >
         <Toolbar>
           <Typography
             component="h1"
@@ -24,7 +29,9 @@ export default function Layouts({ children }) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container sx={{ minHeight: '80vh' }}>{children}</Container>
+      <Container sx={{ minHeight: '80vh', marginTop: '80px' }}>
+        {children}
+      </Container>
       <Footer>
         <Typography component="p">All rights reserved. Next shoppo.</Typography>
       </Footer>
