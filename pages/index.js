@@ -8,31 +8,39 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import Layouts from '../components/Layouts.style';
+import NextLink from 'next/link';
+import Layout from '../components/Layout';
 import data from '../utils/data';
 
 export default function Home() {
   return (
-    <Layouts>
+    <Layout>
       <div>
         <h1>Products</h1>
         <Grid container spacing={3}>
           {data.products.map((product) => (
             <Grid item md={4} key={product.name}>
               <Card>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    image={product.image}
-                    title={product.name}
-                  ></CardMedia>
-                  <CardContent>
-                    <Typography>{product.name}</Typography>
-                  </CardContent>
-                </CardActionArea>
+                <NextLink href={`/product/${product.slug}`} passHref>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      image={product.image}
+                      title={product.name}
+                    ></CardMedia>
+                    <CardContent>
+                      <Typography>{product.name}</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </NextLink>
                 <CardActions>
                   <Typography>${product.price}</Typography>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    sx={{ borderRadius: '24px', marginLeft: '10px' }}
+                  >
                     Add to card
                   </Button>
                 </CardActions>
@@ -41,6 +49,6 @@ export default function Home() {
           ))}
         </Grid>
       </div>
-    </Layouts>
+    </Layout>
   );
 }
