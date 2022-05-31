@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Badge,
   Box,
   Container,
   createTheme,
@@ -10,7 +11,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import Cookies from 'js-cookie';
+import jsCookie from 'js-cookie';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import React, { useContext } from 'react';
@@ -19,7 +20,7 @@ import NoSsr from './NoSsr';
 
 export default function Layout({ title, description, children }) {
   const { state, dispatch } = useContext(Store);
-  const { darkMode } = state;
+  const { darkMode, cart } = state;
   const theme = createTheme({
     typography: {
       h1: {
@@ -39,10 +40,12 @@ export default function Layout({ title, description, children }) {
     palette: {
       mode: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#e430e4',
+        // main: '#e430e4',
+        main: '#ba68c8',
       },
       secondary: {
-        main: '#208080',
+        // main: '#208080',
+        main: '#4fc3f7',
       },
     },
   });
@@ -50,7 +53,7 @@ export default function Layout({ title, description, children }) {
   const darkModeChangeHandler = () => {
     dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
     const newDarkMode = !darkMode;
-    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+    jsCookie.set('darkMode', newDarkMode ? 'ON' : 'OFF');
   };
   return (
     <div>
@@ -61,23 +64,15 @@ export default function Layout({ title, description, children }) {
       <NoSsr>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppBar
-            position="fixed"
-            sx={{
-              backgroundColor: '#203040',
-            }}
-          >
+          <AppBar position="fixed" color="background">
             <Toolbar>
               <NextLink href="/" passHref>
-                <Link>
+                <Link color="primary" sx={{ textDecoration: 'none' }}>
                   <Typography
                     component="h1"
                     variant="h1"
                     sx={{
-                      color: '#primary',
                       marginLeft: '10px',
-                      fontWeight: 'bold',
-                      fontSize: '1.5rem',
                     }}
                   >
                     shoppo
@@ -85,17 +80,27 @@ export default function Layout({ title, description, children }) {
                 </Link>
               </NextLink>
               <Box sx={{ flexGrow: 1 }}></Box>
-              <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Switch
                   checked={darkMode}
                   onChange={darkModeChangeHandler}
                   color="secondary"
                 ></Switch>
                 <NextLink href="/cart" passHref>
-                  <Link>Cart</Link>
+                  <Link color="secondary" sx={{ textDecoration: 'none' }}>
+                    {cart.cartItems.length > 0 ? (
+                      <Badge badgeContent={cart.cartItems.length}>
+                        <Typography sx={{ marginX: '10px' }}>Cart</Typography>
+                      </Badge>
+                    ) : (
+                      <Typography sx={{ marginX: '10px' }}>Cart</Typography>
+                    )}
+                  </Link>
                 </NextLink>
                 <NextLink href="/login" passHref>
-                  <Link>Login</Link>
+                  <Link color="secondary" sx={{ textDecoration: 'none' }}>
+                    <Typography sx={{ marginX: '10px' }}>Login</Typography>
+                  </Link>
                 </NextLink>
               </Box>
             </Toolbar>
