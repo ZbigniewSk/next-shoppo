@@ -18,12 +18,14 @@ import {
 import axios from 'axios';
 import Image from 'next/image';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 
 export default function CartScreen() {
   const { state, dispatch } = useContext(Store);
+  const router = useRouter();
   const {
     cart: { cartItems },
   } = state;
@@ -38,6 +40,10 @@ export default function CartScreen() {
 
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
+
+  const checkoutHanlder = () => {
+    router.push('/shipping');
   };
 
   return (
@@ -131,6 +137,7 @@ export default function CartScreen() {
                 </ListItem>
                 <ListItem>
                   <Button
+                    onClick={checkoutHanlder}
                     variant="outlined"
                     fullWidth
                     sx={{ borderRadius: '24px' }}
