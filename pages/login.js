@@ -7,21 +7,31 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import axios from 'axios';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 
 export default function Login() {
-  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const loginHandler = () => {
-    //router.push('/shipping');
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        email,
+        password,
+      });
+      alert('succes login');
+    } catch (err) {
+      alert(err.response.data ? err.response.data.message : err.message);
+    }
   };
 
   return (
     <Layout title="Login">
-      <form>
+      <form onSubmit={submitHandler}>
         <Box sx={{ maxWidth: 800, margin: '0 auto' }}>
           <Typography component="h1" variant="h1">
             Login
@@ -34,6 +44,7 @@ export default function Login() {
                 id="email"
                 label="Email"
                 inputProps={{ type: 'email' }}
+                onChange={(e) => setEmail(e.target.value)}
               ></TextField>
             </ListItem>
             <ListItem>
@@ -43,11 +54,11 @@ export default function Login() {
                 id="password"
                 label="Password"
                 inputProps={{ type: 'password' }}
+                onChange={(e) => setPassword(e.target.value)}
               ></TextField>
             </ListItem>
             <ListItem>
               <Button
-                onClick={loginHandler}
                 variant="outlined"
                 color="primary"
                 fullWidth
