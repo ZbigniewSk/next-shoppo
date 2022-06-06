@@ -1,10 +1,17 @@
-import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
+import { useContext, useEffect } from 'react';
+import { Store } from '../utils/Store';
 
 export default function Shipping() {
   const router = useRouter();
+  const { state } = useContext(Store);
+  const { userInfo } = state;
 
-  const loginHandler = () => router.push('/login');
+  useEffect(() => {
+    if (!userInfo) {
+      router.push('/login?redirect=/shipping');
+    }
+  }, [userInfo]);
 
-  return <Button onClick={loginHandler}>Login</Button>;
+  return <div>Shipping</div>;
 }

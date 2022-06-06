@@ -2,10 +2,13 @@ import {
   AppBar,
   Badge,
   Box,
+  Button,
   Container,
   createTheme,
   CssBaseline,
   Link,
+  Menu,
+  MenuItem,
   Switch,
   ThemeProvider,
   Toolbar,
@@ -14,13 +17,16 @@ import {
 import jsCookie from 'js-cookie';
 import Head from 'next/head';
 import NextLink from 'next/link';
-import React, { useContext } from 'react';
+import { useRouter } from 'next/router';
+import React, { useContext, useState } from 'react';
 import { Store } from '../utils/Store';
 import NoSsr from './NoSsr';
 
 export default function Layout({ title, description, children }) {
   const { state, dispatch } = useContext(Store);
-  const { darkMode, cart } = state;
+  const { darkMode, cart, userInfo } = state;
+  const router = useRouter();
+
   const theme = createTheme({
     typography: {
       h1: {
@@ -55,6 +61,25 @@ export default function Layout({ title, description, children }) {
     const newDarkMode = !darkMode;
     jsCookie.set('darkMode', newDarkMode ? 'ON' : 'OFF');
   };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const loginClickHandler = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const loginMenuCloseHandler = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutClickHandler = (e) => {
+    setAnchorEl(null);
+    dispatch({ type: 'USER_LOGOUT' });
+    jsCookie.remove('userInfo');
+    jsCookie.remove('cartItems');
+    router.push('/');
+  };
+
   return (
     <div>
       <Head>
@@ -87,7 +112,7 @@ export default function Layout({ title, description, children }) {
                   color="secondary"
                 ></Switch>
                 <NextLink href="/cart" passHref>
-                  <Link color="secondary" sx={{ textDecoration: 'none' }}>
+                  <Link sx={{ textDecoration: 'none' }}>
                     {cart.cartItems.length > 0 ? (
                       <Badge badgeContent={cart.cartItems.length}>
                         <Typography sx={{ marginX: '10px' }}>Cart</Typography>
@@ -98,9 +123,40 @@ export default function Layout({ title, description, children }) {
                   </Link>
                 </NextLink>
                 <NextLink href="/login" passHref>
-                  <Link color="secondary" sx={{ textDecoration: 'none' }}>
-                    <Typography sx={{ marginX: '10px' }}>Login</Typography>
-                  </Link>
+                  {userInfo ? (
+                    <>
+                      <Button
+                        aria-controls="simple-menu"
+                        aria-haspopup="true"
+                        onClick={loginClickHandler}
+                      >
+                        <Typography
+                          sx={{ marginX: '10px', textTransform: 'initial' }}
+                        >
+                          {userInfo.name}
+                        </Typography>
+                      </Button>
+                      <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={loginMenuCloseHandler}
+                      >
+                        <MenuItem onClick={loginMenuCloseHandler}>
+                          Profile
+                        </MenuItem>
+                        <MenuItem onClick={loginMenuCloseHandler}>
+                          My account
+                        </MenuItem>
+                        <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+                      </Menu>
+                    </>
+                  ) : (
+                    <Link sx={{ textDecoration: 'none' }}>
+                      <Typography sx={{ marginX: '10px' }}>Login</Typography>
+                    </Link>
+                  )}
                 </NextLink>
               </Box>
             </Toolbar>
