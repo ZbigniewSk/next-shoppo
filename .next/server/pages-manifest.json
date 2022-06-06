@@ -2,8 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/users/login": "pages/api/users/login.js",
-  "/api/products/[id]": "pages/api/products/[id].js",
-  "/cart": "pages/cart.js"
+  "/shipping": "pages/shipping.js",
+  "/api/users/register": "pages/api/users/register.js",
+  "/": "pages/index.js"
 }
