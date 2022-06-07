@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/shipping": "pages/shipping.js",
   "/api/users/register": "pages/api/users/register.js",
   "/": "pages/index.js"
 }
