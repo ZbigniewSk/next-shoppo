@@ -72,7 +72,7 @@ export default function Register() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  requred: true,
+                  required: true,
                   minLength: 2,
                 }}
                 render={({ field }) => (
@@ -101,7 +101,7 @@ export default function Register() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  requred: true,
+                  required: true,
                   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                 }}
                 render={({ field }) => (
@@ -130,7 +130,7 @@ export default function Register() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  requred: true,
+                  required: true,
                   minLength: 6,
                 }}
                 render={({ field }) => (
@@ -159,7 +159,7 @@ export default function Register() {
                 control={control}
                 defaultValue=""
                 rules={{
-                  requred: true,
+                  required: true,
                   minLength: 6,
                 }}
                 render={({ field }) => (
