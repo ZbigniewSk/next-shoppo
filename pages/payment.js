@@ -31,7 +31,7 @@ export default function Payment() {
     if (!shippingAddress.address) {
       Router.push('/shipping');
     } else {
-      setPaymentMethod(JSON.parse(jsCookie.get('paymentMethod')) || '');
+      setPaymentMethod(jsCookie.get('paymentMethod') || '');
     }
   }, []);
 
@@ -46,7 +46,7 @@ export default function Payment() {
       router.push('/placeorder');
     }
   };
-  console.log('pay ', paymentMethod);
+
   return (
     <Layout title="Payment Method">
       <CheckoutWizard activeStep={2} />

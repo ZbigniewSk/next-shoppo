@@ -2,8 +2,5 @@
   "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/placeorder": "pages/placeorder.js",
-  "/cart": "pages/cart.js",
-  "/api/orders": "pages/api/orders.js",
-  "/": "pages/index.js"
+  "/api/orders/[id]": "pages/api/orders/[id].js"
 }
