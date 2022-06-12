@@ -3,7 +3,11 @@ import React from 'react';
 
 export default function CheckoutWizard({ activeStep = 0 }) {
   return (
-    <Stepper activeStep={activeStep} alternativeLabel>
+    <Stepper
+      activeStep={activeStep}
+      alternativeLabel
+      sx={{ backgroundColor: 'transparent' }}
+    >
       {['Login', 'Shipping Address', 'Payment Method', 'Place Order'].map(
         (step) => (
           <Step key={step}>

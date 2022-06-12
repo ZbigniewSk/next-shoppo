@@ -45,14 +45,50 @@ export default function Layout({ title, description, children }) {
     },
     palette: {
       mode: darkMode ? 'dark' : 'light',
-      primary: {
-        // main: '#e430e4',
-        main: '#ba68c8',
-      },
-      secondary: {
-        // main: '#208080',
-        main: '#4fc3f7',
-      },
+
+      ...(darkMode === false
+        ? {
+            primary: {
+              // main: '#e430e4',
+              light: '#f0f0f0',
+              main: '#ba68c8',
+              dark: '#0f0f0f',
+            },
+            secondary: {
+              // main: '#208080',
+              light: '#f0f0f0',
+              main: '#4fc3f7',
+              dark: '#0f0f0f',
+            },
+            background: {
+              default: '#ffffff',
+              paper: '#f6f6f8',
+            },
+            navbar: {
+              main: '#404040',
+            },
+          }
+        : {
+            primary: {
+              // main: '#e430e4',
+              light: '#f0f0f0',
+              main: '#ba68c8',
+              dark: '#0f0f0f',
+            },
+            secondary: {
+              // main: '#208080',
+              light: '#f0f0f0',
+              main: '#4fc3f7',
+              dark: '#0f0f0f',
+            },
+            // background: {
+            //   default: '#263238',
+            //   paper: '#000000',
+            // },
+            navbar: {
+              main: '#212121',
+            },
+          }),
     },
   });
 
@@ -72,7 +108,7 @@ export default function Layout({ title, description, children }) {
     setAnchorEl(null);
   };
 
-  const logoutClickHandler = (e) => {
+  const logoutClickHandler = () => {
     setAnchorEl(null);
     dispatch({ type: 'USER_LOGOUT' });
     jsCookie.remove('userInfo');
@@ -89,7 +125,7 @@ export default function Layout({ title, description, children }) {
       <NoSsr>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppBar position="fixed" color="background">
+          <AppBar position="fixed" color="navbar">
             <Toolbar>
               <NextLink href="/" passHref>
                 <Link color="primary" sx={{ textDecoration: 'none' }}>
@@ -161,7 +197,12 @@ export default function Layout({ title, description, children }) {
               </Box>
             </Toolbar>
           </AppBar>
-          <Container sx={{ minHeight: '80vh', marginTop: '80px' }}>
+          <Container
+            sx={{
+              minHeight: '80vh',
+              marginTop: '80px',
+            }}
+          >
             {children}
           </Container>
           <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
